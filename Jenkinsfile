@@ -1,16 +1,23 @@
 pipeline {
     agent any
+    environment {
+        // Specify the Python executable path
+        pythonPath = '/path/to/python'
+    }
     stages {
-       stage('Installing packages') {
+        stage('Installing packages') {
             steps {
-                // Use the sh step to install packages
-                sh 'pip install -r requirements.txt'
+                // Install pip
+                sh '${pythonPath} -m ensurepip --upgrade'
+                sh '${pythonPath} -m pip install --upgrade pip'
+                // Install packages from requirements.txt
+                sh '${pythonPath} -m pip install -r requirements.txt'
             }
         }
-        stage ('Test'){
-             steps {
-                sh 'python3 unit_test.py'
+        stage('Test') {
+            steps {
+                sh '${pythonPath} unit_test.py'
+            }
         }
     }
-}
 }
