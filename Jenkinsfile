@@ -8,7 +8,7 @@ pipeline {
 
             }
             
-        }
+       
         stage('Installing packages') {
             
             steps {
